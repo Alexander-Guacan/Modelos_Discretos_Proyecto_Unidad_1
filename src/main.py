@@ -10,21 +10,29 @@ que quede al final del juego.
 
 Autor: Alexander David Guacan Rivera
 
-Version: 1.2
+Version: 1.3
 """
 
-from Game import * # Importamos la clase Game
+# Importamos la clase Game
+from Game import *
 
 # Definimos la funcion principal desde donde empezara el programa
-def main() -> int:
+def main() -> None:
     """_summary_ La funcion sirve como punto inicial del programa
-
-    Returns:
-        int: _description_ Retorna el estado en que termino el programa (0 = correcto, 1 = incorrecto o con error)
     """
-    game = Game() # Creamos una instancia de la clase Game
-    game.start() # Iniciamos el juego
-    
-    return 0
 
-main() # Llamamos a la funcion main para comenzar el programa
+    # Creamos una instancia de la clase Game
+    game = Game()
+
+    # Llamamos a la funcion miembro start de la clase Game. Guardamos en la variable is_winner el estado final del jugador si el mismo gano o no
+    is_winner = game.start()
+    
+    # Si el jugador gano el juego
+    if is_winner:
+        print("\nGanaste")
+    # Si el jugador no gano el juego
+    else:
+        print("\nPerdiste")
+
+# Llamamos a la funcion main para comenzar el programa
+main()
