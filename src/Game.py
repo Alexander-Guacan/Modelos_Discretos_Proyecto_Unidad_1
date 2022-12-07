@@ -3,7 +3,7 @@ Archivo: Game.py
 
 Autor: Alexander David Guacan Rivera
 
-Version: 1.3
+Version: 1.4
 
 """
 
@@ -56,13 +56,13 @@ class Game:
             current_word = ""
 
             # Bucle que valida un primer ingreso por consola, donde el mismo no debe ser una cadena vacia ni contener algun caracter que no se alfabetico. Las palabras con tilde no se admiten.
-            while len(current_word) == 0 or not current_word.isalpha():
+            while len(current_word) <= 4 or not current_word.isalpha():
                 # Uso de la funcion system de la libreria os. Limpia la consola.
                 os.system("cls")
                 # Se muestra por consola la ultima palabra ingresada en el listado de la variable miembro words_entered
                 print(f"Palabra: {self.words_entered[-1]}\n")
                 # Se pide al usuario que ingrese una palabra por consola y se utiliza la funcion replace para borrar todos los espacios en blanco. Posteriormente se almacena dicho ingreso en la variable current_word
-                current_word = input("Ingrese una nueva palabra: ").replace(" ", '')
+                current_word = input("Ingrese una nueva palabra: ")
 
             # Se verifica si la palabra es valida si la letra con la comienza la palabra ingresada por el usuario es igual a la letra final de la ultima palabra en el listado de words_entered y dicha palabra ingresada por el usuario no ha sido previamente ingresada en words_entered
             if current_word[0] == self.words_entered[-1][-1] and current_word not in self.words_entered:
@@ -77,7 +77,7 @@ class Game:
                 # Decrementamos en uno las vidas del jugador
                 self.lives -= 1
                 # Mostramos en consola informacion del numero de vidas que le quedan al jugador
-                print(f"\n[INCORRECTO]-> Vidas restantes: {self.lives}\n")
+                print(f"\n[INCORRECTO: Palabra no comienza por la ultima letra de la palabra presentada o es repetida]-> Vidas restantes: {self.lives}\n")
 
             # Ejecutamos una instruccion del terminal que pausara el juego hasta que el usuario presiona una tecla cualquiera
             os.system("pause > nul")
