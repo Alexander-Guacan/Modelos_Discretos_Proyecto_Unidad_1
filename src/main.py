@@ -10,7 +10,7 @@ que quede al final del juego.
 
 Autor: Alexander David Guacan Rivera
 
-Version: 1.3
+Version: 1.4
 """
 
 # Importamos la clase Game
@@ -19,7 +19,29 @@ from Game import *
 # Definimos la funcion principal desde donde empezara el programa
 def main() -> None:
     """_summary_ La funcion sirve como punto inicial del programa
+
+        Returns:
+        - None
     """
+
+    # Limpiamos la terminal
+    os.system("cls")
+
+    # Imprimimos las reglas del juego
+    print("""\t\t\tPALABRAS ENCADENADAS
+
+COMO JUGAR: EL JUEGO INICIARA CON UNA PALABRA AL AZAR, SU OBJETIVO DEBERA SER INGRESAR PALABRAS
+QUE EMPIEZEN POR LA ULTIMA LETRA DE LA PALABRA PRESENTADA
+REGLAS:
+- NO SE ACEPTAN PALABRAS QUE INICIEN POR VOCALES CON TILDE
+- TIENE 3 VIDAS, CADA PALABRA MAL INGRESADA O REPETIDA LE RESTARA UNA VIDA
+- DEBE INGRESAR HASTA 5 PALABRAS DE FORMA CORRECTA PARA GANAR
+- INGRESE PALABRAS DE MAS DE 4 LETRAS
+    
+[PRESIONE CUALQUIER TECLA PARA COMENZAR EL JUEGO]""")
+
+    os.system("pause > nul")
+
 
     # Creamos una instancia de la clase Game
     game = Game()
