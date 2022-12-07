@@ -64,6 +64,13 @@ class Game:
                 # Se pide al usuario que ingrese una palabra por consola y se utiliza la funcion replace para borrar todos los espacios en blanco. Posteriormente se almacena dicho ingreso en la variable current_word
                 current_word = input("Ingrese una nueva palabra: ")
 
+                if len(current_word) <= 4:
+                    print("\n[ERROR: INGRESE UNA PALABRA DE MAS DE 4 LETRAS]")
+                    os.system("pause > nul")
+                elif not current_word.isalpha():
+                    print("\n[ERROR: SU PALABRA CONTIENE CARACTERES NO ALFABETICOS]")
+                    os.system("pause > nul")
+
             # Se verifica si la palabra es valida si la letra con la comienza la palabra ingresada por el usuario es igual a la letra final de la ultima palabra en el listado de words_entered y dicha palabra ingresada por el usuario no ha sido previamente ingresada en words_entered
             if current_word[0] == self.words_entered[-1][-1] and current_word not in self.words_entered:
                 # Incrementamos en uno el puntaje del jugador
