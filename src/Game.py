@@ -17,7 +17,7 @@ class Game:
 
     Attributes:
     - __random_words: Random list of words, from which one of them will be chosen at random to start the game.
-    - __words_entered: This variable is in charge of storing all the valid words entered by the user as well as the word elegida al azar de random_wods
+    - __words_entered: This variable is responsible for storing all valid words entered by the user as well as the randomly chosen word from random_words.
     - __score_to_wint: Indicates the number of valid words the player must enter to win the game.
     - __current_score: It indicates the number of valid words the player has entered.
 
@@ -36,7 +36,7 @@ class Game:
 
         # Initializing member variable __random_words with a random list of words, from which one of them will be chosen at random to start the game.
         self.__random_words = ["pera", "palo", "cobre", "piramide", "computación", "piedra", "caer", "kiwi", "tribu", "sapo", "lémur"]
-        # Initializing member variable __words_entered with an empty object of the list class that stores objects of class str. This variable is in charge of storing all the valid words entered by the user as well as the word elegida al azar de random_wods
+        # Initializing member variable __words_entered with an empty object of the list class that stores objects of class str. This variable is responsible for storing all valid words entered by the user as well as the randomly chosen word from random_words.
         self.__words_entered = list()
         # Initializing member variable __lives with a value of 3. Indicates the maximum number of wrong words the user can enter in the game.
         self.__lives = 3
