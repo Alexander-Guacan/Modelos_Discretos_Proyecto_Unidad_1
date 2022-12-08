@@ -7,8 +7,8 @@ Version: 1.4
 
 """
 
-# Importacion de libreria random y libreria os propias del estandar de Python
-import random, os
+# Importacion de libreria random y libreria os propias del estandar de Python. tambien imporamos el modulo DictionaryOnline encargada de verificar si una palabra existe en el diccionario
+import random, DictionaryOnline, os as console
 
 class Game:
     """_summary_ Clase encargada del gestionamiento del juego Palabras encadanadas
@@ -18,86 +18,97 @@ class Game:
         """_summary_ Constructor de la clase Game, inicializa las variables miembro
         """
 
-        # Inicializando variable miembro random_words la cual tendra una lista de 3 palabras, de las cuales se elegira una de ellas al azar para iniciar el juego
-        self.random_words = ["pera", "palo", "cobre"]
-        # Inicializando variable miembro words_entered con un objeto vacio de la clase list que almacena objetos de la clase str. Esta variable se encarga de almacenar todas las palabras validas ingresadas por el usuario asi como la palabra elegida al azar de random_wods
-        self.words_entered = list()
-        # Inicializando variable miembro lives con el valor de 3. Indica el numero de palabras erroneas maximas que el usuario puede ingresar en el juego
-        self.lives = 3
-        # Inicializando variable miembro score_to_win con el valor de 5. Indica 
-        self.score_to_win = 5
+        # Inicializando variable miembro __random_words la cual tendra una lista de 3 palabras, de las cuales se elegira una de ellas al azar para iniciar el juego
+        self.__random_words = ["pera", "palo", "cobre"]
+        # Inicializando variable miembro __words_entered con un objeto vacio de la clase list que almacena objetos de la clase str. Esta variable se encarga de almacenar todas las palabras validas ingresadas por el usuario asi como la palabra elegida al azar de random_wods
+        self.__words_entered = list()
+        # Inicializando variable miembro __lives con el valor de 3. Indica el numero de palabras erroneas maximas que el usuario puede ingresar en el juego
+        self.__lives = 3
+        # Inicializando variable miembro __score_to_win con el valor de 5. Indica el numero de palabras validas que el jugador debera ingresar para ganar el juego
+        self.__score_to_win = 5
+        # Inicializamos variable miembro __current_score con el valor de 0. Indica el numero de palabras validas que lleva ingresando el jugador
+        self.__current_score = 0
 
     def __select_random_word(self) -> str:
-        """_summary_ Elige una palabra al azar del listado de palabras de la variable miembro random_words
+        """_summary_ Elige una palabra al azar del listado de palabras de la variable miembro __random_words
 
         Returns:
-            str: _description_ Palabra al azar de random_words
+            str: _description_ Palabra al azar de __random_words
         """
 
-        # Seleccionando una palabra al azar a traves de la generacion de un numero randomico con ayuda de la funcion randInt, perteneciente a la libreria random, que servira como indice dentro de la lista random_words
-        return self.random_words[random.randint(0, len(self.random_words) - 1)]
+        # Seleccionando una palabra al azar a traves de la generacion de un numero randomico con ayuda de la funcion randInt, perteneciente a la libreria random, que servira como indice dentro de la lista __random_words
+        return self.__random_words[random.randint(0, len(self.__random_words) - 1)]
 
-    def start(self) -> bool:
-        """_summary_ Da inicio al juego de palabras encadenadas
+    def __is_a_chained_word(self, word : str) -> bool:
+        """_summary_ Verifica si una palabra cumple con las reglas del juego
+
+        Args:
+            word (str): _description_ Palabra a verificar que cumpla con las reglas del juego
 
         Returns:
-            bool: _description_ Retorna true si el jugador gano el juego que se traduce que completo el puntaje necesario para ganar, caso contrario retorna false
+            bool: _description_ Retorna true si la palabra cumple con todas las reglas del juego y false en case contrario
         """
 
-        # Inicializamos variable current_score a 0. Cuenta el numero de palabras validas que el usuario ha ido ingresado a lo largo del juego
-        current_score = 0
-        # Seleccionamos una palabra al azar de la variable miembro random_words y la agregamos la final de la lista de la variable miembro words_entered
-        self.words_entered.append(self.__select_random_word())
+        # Verificamos que se cumplan las reglas del juego de palabras encadenadas. Verificamos que la palabra empieze por la ultima letra de la ultima palabra ingresada en __words_entered. Tambien que dicha palabra no sea repetida y que la palabra exista en el diccionario
+        return word[0] == self.__words_entered[-1][-1] and word not in self.__words_entered and DictionaryOnline.is_a_dictionary_word(word)
+
+    def __update_score(self) -> None:
+        """_summary_ Actualiza el puntaje del jugador incrementando en 1 el puntaje que lleva actualmente
+        """
+
+        # Incrementamos en uno el puntaje del jugador
+        self.__current_score += 1
+        # Mostramos por consola informacion acerca del puntaje
+        print(f"\n[CORRECTO]-> Puntaje: {self.__current_score} de {self.__score_to_win}\n")
+
+    def __update_lives(self) -> None:
+        """_summary_ Actualizamos el numero de vidas del jugador decremetando en 1 el total de vidas que le quedan
+        """
+
+        # Decrementamos en uno las vidas del jugador
+        self.__lives -= 1
+        # Mostramos en consola informacion del porque la palabra ingresada no es valida asi como del numero de vidas que le quedan al jugador
+        print(f"\nMOTIVOS POR EL CUAL TU PALABRA NO ES VALIDA:\n"
+                "1.- La palabra no empieza literalmente por la ultima letra de la palabra presentada\n"
+                "2.- La palabra ha sido ingresada previamente\n"
+                "3.- La palabra no existe en el diccionario\n"
+                f"Vidas restantes: {self.__lives}"
+        )
+
+    def start(self) -> None:
+        """_summary_ 
+            Variables:
+            - current_word : Variable de tipo string encargada de guardar lo que ingresa por teclado el jugador para su posterior verificacion
+        """
+
+        # Seleccionamos una palabra al azar de la variable miembro __random_words y la agregamos la final de la lista de la variable miembro __words_entered
+        self.__words_entered.append(self.__select_random_word())
 
         # El juego se mantiene en ejecucion mientras el jugador aun tenga vidas disponibles o aun no haya completado el puntaje para ganar
-        while self.lives > 0 and current_score < self.score_to_win:
+        while self.__lives > 0 and self.__current_score < self.__score_to_win:
+            # Limpiamos la consola
+            console.system("cls")
+            
+            # Imprimimos por pantalla la ultima palabra seleccionada, que es la ultima palabra ingresada en el arreglo __words_entered
+            print(f"Palabra actual: {self.__words_entered[-1]}\n")
 
-            # Inicializamos la variable current_word con un string vacio. Almacena lo que ingresa el jugador por teclado y que a su vez nos permitira disernir si dicha palabra es valida o no segun las reglas del juego
-            current_word = ""
+            # Pedimos al usuario que ingrese por teclado una palabra para posteriormente validarla
+            current_word = input("Ingrese una palabra encadenada: ")
 
-            # Bucle que valida un primer ingreso por consola, donde el mismo no debe ser una cadena vacia ni contener algun caracter que no se alfabetico. Las palabras con tilde no se admiten.
-            while len(current_word) <= 4 or not current_word.isalpha():
-                # Uso de la funcion system de la libreria os. Limpia la consola.
-                os.system("cls")
-                # Se muestra por consola la ultima palabra ingresada en el listado de la variable miembro words_entered
-                print(f"Palabra: {self.words_entered[-1]}\n")
-                # Se pide al usuario que ingrese una palabra por consola y se utiliza la funcion replace para borrar todos los espacios en blanco. Posteriormente se almacena dicho ingreso en la variable current_word
-                current_word = input("Ingrese una nueva palabra: ")
-
-                # Si la palabra contiene menos de 4 letras
-                if len(current_word) <= 4:
-                    # Impresion en pantalla el error generado
-                    print("\n[ERROR: INGRESE UNA PALABRA DE MAS DE 4 LETRAS]")
-                    # Hacmos una pausa a la ejecucion del programa
-                    os.system("pause > nul")
-
-                # Si la palabra contiene algun caracter no alfabetico
-                elif not current_word.isalpha():
-                    # Impresion en pantalla el error generado
-                    print("\n[ERROR: SU PALABRA CONTIENE CARACTERES NO ALFABETICOS]")
-                    # Hacmos una pausa a la ejecucion del programa
-                    os.system("pause > nul")
-
-            # Se verifica si la palabra es valida si la letra con la comienza la palabra ingresada por el usuario es igual a la letra final de la ultima palabra en el listado de words_entered y dicha palabra ingresada por el usuario no ha sido previamente ingresada en words_entered
-            if current_word[0] == self.words_entered[-1][-1] and current_word not in self.words_entered:
-                # Incrementamos en uno el puntaje del jugador
-                current_score += 1
-                # Agregamos la palabra ingresada por el usuario al listado de la variable miembro words_entered
-                self.words_entered.append(current_word)
-                # Mostramos por consola informacion acerca del puntaje
-                print(f"\n[CORRECTO]-> Puntaje: {current_score} de {self.score_to_win}\n")
+            # Se verifica si la palabra es valida si la letra con la comienza la palabra ingresada por el usuario es igual a la letra final de la ultima palabra en el listado de __words_entered y dicha palabra ingresada por el usuario no ha sido previamente ingresada en __words_entered
+            if self.__is_a_chained_word(current_word):
+                # Actualizamos el puntaje del jugador
+                self.__update_score()
+                # Agregamos la palabra ingresada por el usuario al listado de la variable miembro __words_entered
+                self.__words_entered.append(current_word)
             # En caso de que la palabra no cumpla las condiciones del juego
             else:
-                # Decrementamos en uno las vidas del jugador
-                self.lives -= 1
-                # Mostramos en consola informacion del numero de vidas que le quedan al jugador
-                print(f"\n[INCORRECTO: Palabra no comienza por la ultima letra de la palabra presentada o es repetida]-> Vidas restantes: {self.lives}\n")
+                # Actualizamos el numero de vidas que lleva el jugador
+                self.__update_lives()
 
             # Ejecutamos una instruccion del terminal que pausara el juego hasta que el usuario presiona una tecla cualquiera
-            os.system("pause > nul")
+            console.system("pause > nul")
 
-        # Limpiamos la consola
-        os.system("cls")
 
         # Determinamos si el jugador gano o no si ha llegado al puntaje establecido para ganar, si no lo cumple es que el jugador ha perdido
-        return current_score == self.score_to_win
+        print("[GANASTE]" if self.__current_score == self.__score_to_win else "[PERDISTE]")
