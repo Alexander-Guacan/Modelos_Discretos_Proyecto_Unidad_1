@@ -50,7 +50,7 @@ class Game:
         """
 
         # Verificamos que se cumplan las reglas del juego de palabras encadenadas. Verificamos que la palabra empieze por la ultima letra de la ultima palabra ingresada en __words_entered. Tambien que dicha palabra no sea repetida y que la palabra exista en el diccionario
-        return word[0] == self.__words_entered[-1][-1] and word not in self.__words_entered and DictionaryOnline.is_a_dictionary_word(word)
+        return len(word) > 0 and word[0] == self.__words_entered[-1][-1] and word not in self.__words_entered and DictionaryOnline.is_a_dictionary_word(word)
 
     def __update_score(self) -> None:
         """_summary_ Actualiza el puntaje del jugador incrementando en 1 el puntaje que lleva actualmente
