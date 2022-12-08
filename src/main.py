@@ -1,28 +1,30 @@
 """
-Tema: Palabras encadenadas
+Title: Palabras encadenadas
 
-Descripcion:
-El juego de las palabras encadenadas, es un juego clasico, el cual desafia la memoria del jugador y su conocimiento de las palabras.
-Consiste en que cada jugador dira una palabra de cualquier ambito y el siguiente jugador debera decir una nueva palabra
-que comienze por la letra de la letra final de la ultima palabra mencionada y que ademas no se haya mencionada previamente.
-Para este juego unicamente sera solo un jugador el que debera ingresar las palabras, mostrando en un inicio una palabra al azar.
+Description:
+The word chain game is a classic game, which challenges the player's memory and knowledge of words.
+It consists in that each player will say a word from any field and the next player must say a new word that begins with the letter of the final letter of the last
+that begins with the letter of the final letter of the last mentioned word and that has not been previously mentioned.
+For this game only one player will have to enter the words, showing a random word at the beginning.
 
-Autor: Alexander David Guacan Rivera
+Author: Alexander David Guacan Rivera
 
-Version: 1.4
+GitHub: https://github.com/Alexander-Guacan/Modelos_Discretos_Proyecto_Unidad_1.git
+
+Version: 1.5
 """
 
-# Importamos la clase Game
+# We import the Game class
 from MenuGraphic import MenuGraphic
-# Importamos la clase MenuGame
+# We import the MenuGame class
 from MenuGame import MenuGame
 
-# Definimos la funcion principal desde donde empezara el programa
+# We define the main function where the program will start from
 def main() -> None:
-    """_summary_ Esta es la funcion principal desde donde empezara a ejecutarse el juego. Haciendo uso de objetos de las clases MenuGraphic y Menu Game. Se presentara al usuario las opciones del menu y solo terminara el juego cuando el jugador seleccione la opcion de "Salir"
+    """_summary_ This is the main function from where the game will start running. Making use of objects of the MenuGraphic and Menu Game classes. The user will be presented with the menu options and the game will only end when the player selects the "Exit" option.
     """
 
-    # Creamos una instancia de la clase MenuGraphic. Inicializando el constructor con el titulo y opciones del menu principal
+    # We create an instance of the MenuGraphic class. Initializing the constructor with the title and options of the main menu.
     menu_gui = MenuGraphic(
     "\t\tPALABRAS ENCADENADAS",
         [
@@ -32,17 +34,17 @@ def main() -> None:
         ]
     )
     
-    # Creamos variable booleana que nos determinara cuando se debera terminar la ejecucion del juego
+    # We create a boolean variable that will determine when the execution of the game should be terminated.
     end_game = False
-    # Creamos una instancia de la clase MenuGame que se encargara de gestionar las opciones elegidas por el jugador
+    # We create an instance of the MenuGame class that will be in charge of managing the options chosen by the player.
     menu_game = MenuGame()
 
-    # El juego se seguira ejecutando mientras la opcion seleccionada por el jugador no sea la de "Salir" en el menu
+    # The game will continue to run as long as the option selected by the player is not "Exit" in the menu.
     while not end_game:
-        # Asignamos el resultado de la opcion elegida en el menu, si fue la de "Salir" es verdadero, caso contrario cualquiera de las otras opciones es falsa
+        # We assign the result of the option chosen in the menu, if it was "Exit" it is true, otherwise any of the other options is false.
         end_game = menu_game.select_option(menu_gui.print())
 
-# Verificamos que el programa esta siendo ejecutado desde el presente modulo
+# We verify that the program is being executed from this module.
 if __name__ == "__main__":
-    # Llamamos a la funcion main para comenzar el programa
+    # We call the main function to start the program
     main()

@@ -1,64 +1,74 @@
 """
-Archivo: MenuGraphic.py
+File: MenuGraphic.py
 
-Autor: Alexander Guacan
+Author: Alexander Guacan
 
-Version: 1.0
+Version: 1.1
+
+GitHub: https://github.com/Alexander-Guacan/Modelos_Discretos_Proyecto_Unidad_1.git
 
 """
 
-# Importando modulo os con el nombre de console
+# Importing os module with the name console
 import os as console
 
 class MenuGraphic:
-    """_summary_ Esta clase es encargada de imprimir en pantalla un menu con las distinas opciones pasadas por paramatero en el constructor y pidiendole al usuario que ingrese el numero de la opcion que desea elegir
+    """_summary_ This class is in charge of printing on the screen a menu with the different options passed by paramatero in the constructor and asking the user to enter the number of the option he/she wants to choose.
+
+    Attributes:
+    - __title: Menu title
+    - __options: Menu options
+
+    Methods:
+    - __init__: Default constructor
+    - print: Show menu on console with all options
     """
 
     def __init__(self, title : str, options : list[str]) -> None:
-        """_summary_ Constructor por default de la clase MenuGraphic
+        """_summary_ Default constructor
 
         Args:
-            title (str): _description_ Titulo del menu
-            options (list[str]): _description_ Listado de opciones del mneu que se desplegara secuencialmente en consola
+            title (str): _description_ Menu title
+            options (list[str]): _description_ List of menu options that will be displayed sequentially on console
         """
 
-        # Inicializando la variable miembro __title con la variable title pasado por parametro
+        # Initializing the member variable __title with the title variable passed as a parameter
         self.__title = title
-        # Inicializando la variable miembro __options con la variable options pasado por parametro
+        # Initializing the member variable __options with the variable options passed as a parameter
         self.__options = options
         
 
     def print(self) -> int:
-        """_summary_ Imprime por pantalla el titulo y listado de opciones de las variables miembro __title y __options respectivamente. A cada opcion se le asigna un numero de forma secuencial desde 1 hasta el numero de opciones existentes en el listado de __options.
+        """_summary_ Print the title and options list of the __title and __options member variables respectively. Each option is assigned a number sequentially from 1 to the number of options in the __options list.
 
         Returns:
-            int: _description_ Opcion seleccionada por el jugador
+            int: _description_ Option selected by the player
         """
 
-        # Esta variable se encarga de almacenar la opcion seleccionada por el jugador y verifica si esta dentro de las opciones existentes
+        # This variable is in charge of storing the option selected by the player and verifies if it is within the existing options.
         option_selected = -1
 
-        # Se le seguira pidiendo al jugador que ingrese una opcion del menu siempre y cuando este fuera del rando de entre 1 y el total de opciones en el listado de __options
+        # The player will still be prompted to enter a menu option as long as it is outside the range of between 1 and the total number of options in the __options list.
         while option_selected < 1 or option_selected > len(self.__options):
-            # Limpiamos la consola
+            # Clean the console
             console.system("cls")
-            # Imprimimos el titulo del menu
+            # Print the menu title
             print(self.__title)
-            # Imprimimos todas las opciones de __options
+            # We print all the options of __options
             for i in range(len(self.__options)):
-                # Agregamos un numero identificador a cada opcion del menu
+                # We add an identifier number to each menu option
                 print(f"{i + 1}.- {self.__options[i]}")
             
-            # Iniciamos un bloque de excepciones
+            # We start an exception block
             try:
-                # Pedimos al usuario que ingrese la opcion del menu
+                # We ask the user to enter the menu option
                 option_selected = int(input("Ingrese el numero de opcion y presione ENTER [ ]\b\b"))
-            # Excepcion si la opcion seleccionada no es de tipo int
+            # Exception if the selected option is not of type int
             except ValueError:
-                # Imprimimos un mensaje que le indique al usuario cual ha sido el error
+                # Print a message telling the user what the error was
                 print("\nERROR: [EL DATO INGRESADO DEBE SER UN NUMERO ENTERO, PRESIONE CUALQUIER TECLA PARA CONTINUAR]\n")
-                # Pausamos la ejecucion del programa pero sin mostrar un mensaje por defecto de la consola
+                # We pause the program execution but without displaying a default console message
                 console.system("pause > nul")
         
-        # Retornamos la opcion que selecciono el jugador
+        # We return the option selected by the player
         return option_selected
