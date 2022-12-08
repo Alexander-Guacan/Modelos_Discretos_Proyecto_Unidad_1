@@ -19,7 +19,7 @@ class Game:
         """
 
         # Inicializando variable miembro __random_words la cual tendra una lista de 3 palabras, de las cuales se elegira una de ellas al azar para iniciar el juego
-        self.__random_words = ["pera", "palo", "cobre"]
+        self.__random_words = ["pera", "palo", "cobre", "piramide", "computación", "piedra", "caer", "kiwi", "tribu", "sapo", "lémur"]
         # Inicializando variable miembro __words_entered con un objeto vacio de la clase list que almacena objetos de la clase str. Esta variable se encarga de almacenar todas las palabras validas ingresadas por el usuario asi como la palabra elegida al azar de random_wods
         self.__words_entered = list()
         # Inicializando variable miembro __lives con el valor de 3. Indica el numero de palabras erroneas maximas que el usuario puede ingresar en el juego
